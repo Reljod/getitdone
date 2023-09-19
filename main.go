@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"github.com/Reljod/getitdone/cmd"
+)
 
 func main() {
-	fmt.Println("Get it Done!")
+	cmd.Execute()
 }
