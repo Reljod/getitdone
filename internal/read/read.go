@@ -4,7 +4,9 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 
+	"github.com/Reljod/getitdone/internal"
 	"github.com/Reljod/getitdone/internal/config"
 )
 
@@ -30,4 +32,28 @@ func ReadConfig() (string, error) {
 	}
 
 	return string(out), nil
+}
+
+func ReadCommands() ([]internal.Command, error) {
+	cmdsRaw, err := ReadConfig()
+	if err != nil {
+		log.Fatal(err)
+		return []internal.Command{}, err
+	}
+
+	var commands []internal.Command = make([]internal.Command, 0)
+
+	commandsRaw := strings.Split(strings.TrimSpace(cmdsRaw), "\n")
+
+	for _, commandRaw := range commandsRaw {
+		splitCmd := strings.Split(commandRaw, " => ")
+		command := internal.Command{
+			Name:    splitCmd[0],
+			Command: splitCmd[1],
+		}
+
+		commands = append(commands, command)
+	}
+
+	return commands, nil
 }
