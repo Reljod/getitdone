@@ -76,7 +76,7 @@ func saveCommand(name string, command string) error {
 		return err
 	}
 
-	cmdToSave := fmt.Sprintf("%v => %v", name, command)
+	cmdToSave := fmt.Sprintf("%v => %v\n", name, command)
 
 	if _, err := f.Write([]byte(cmdToSave)); err != nil {
 		return err

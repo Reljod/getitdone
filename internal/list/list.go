@@ -2,27 +2,17 @@ package list
 
 import (
 	"fmt"
-	"io"
 	"log"
-	"os"
 
-	"github.com/Reljod/getitdone/internal/config"
+	"github.com/Reljod/getitdone/internal/read"
 )
 
 func ListCmds() {
-	configPath := config.ConfigPath
-
-	f, err := os.Open(configPath)
+	cmds, err := read.ReadConfig()
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
 
-	out, err := io.ReadAll(f)
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
-
-	fmt.Printf("\n[ getitdone ls ] Commands list:\n\n%v", string(out))
+	fmt.Printf("\n[ getitdone ls ] Commands list:\n\n%v\n", cmds)
 }

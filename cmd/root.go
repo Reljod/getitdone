@@ -19,10 +19,15 @@ func init() {
 		saveCmd,
 		CreateSetupCmd(),
 		AddListCmd(),
+		AddDeleteCmd(),
 	}
 
 	rootCmd.AddCommand(cmds...)
-	rootCmd.AddCommand(*initial.CompileCommandsFromConfig()...)
+	cmdsFromConfig := initial.CompileCommandsFromConfig()
+	if cmdsFromConfig != nil {
+		rootCmd.AddCommand(*cmdsFromConfig...)
+	}
+
 }
 
 func Execute() {

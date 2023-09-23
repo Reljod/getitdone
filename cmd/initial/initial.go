@@ -27,10 +27,15 @@ func CompileCommandsFromConfig() *[]*cobra.Command {
 	}()
 
 	b, err := io.ReadAll(f)
-	commandsRaw := strings.Split(strings.TrimSpace(string(b)), "\n")
+	commandsRaw := strings.TrimSpace(string(b))
+	commandsRawList := strings.Split(commandsRaw, "\n")
+
+	if commandsRaw == "" {
+		return nil
+	}
 
 	var commands []*cobra.Command = make([]*cobra.Command, 0)
-	for _, c := range commandsRaw {
+	for _, c := range commandsRawList {
 		splitCmd := strings.Split(c, " => ")
 		name := splitCmd[0]
 		command := splitCmd[1]
