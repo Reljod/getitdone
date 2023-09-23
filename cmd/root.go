@@ -4,16 +4,19 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Reljod/getitdone/cmd/initial"
 	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "gid",
-	Short: "Gid is a cli tool for saving your most used cli commands",
+	Use:   "getitdone",
+	Short: "getitdone is a cli tool for saving your most used cli commands",
 }
 
 func init() {
 	rootCmd.AddCommand(saveCmd)
+	rootCmd.AddCommand(CreateSetupCmd())
+	rootCmd.AddCommand(*initial.CompileCommandsFromConfig()...)
 }
 
 func Execute() {

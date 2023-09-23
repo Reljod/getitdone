@@ -3,8 +3,11 @@ package save
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"os/exec"
 	"regexp"
+
+	"github.com/Reljod/getitdone/internal/config"
 )
 
 func Save(name string, command *string) error {
@@ -21,7 +24,9 @@ func Save(name string, command *string) error {
 		}
 	}
 
-	fmt.Printf("%v => %v\n", name, cmd)
+	if err := saveCommand(name, cmd); err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -62,4 +67,21 @@ func getLastCommand() (string, error) {
 	reg := regexp.MustCompile(`.+;(.+)`)
 	res := reg.ReplaceAllString(b3.String(), "${1}")
 	return res, nil
+}
+
+func saveCommand(name string, command string) error {
+	configPath := config.ConfigPath
+	f, err := os.OpenFile(configPath, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+	if err != nil {
+		return err
+	}
+
+	cmdToSave := fmt.Sprintf("%v => %v", name, command)
+
+	if _, err := f.Write([]byte(cmdToSave)); err != nil {
+		return err
+	}
+
+	defer f.Close()
+	return nil
 }
