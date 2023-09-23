@@ -17,6 +17,12 @@ func ReadConfig() (string, error) {
 		return "", nil
 	}
 
+	defer func() {
+		if err = f.Close(); err != nil {
+			log.Fatal(err)
+		}
+	}()
+
 	out, err := io.ReadAll(f)
 	if err != nil {
 		log.Fatal(err)
