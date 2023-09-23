@@ -19,6 +19,7 @@ func init() {
 		saveCmd,
 		CreateSetupCmd(),
 		AddListCmd(),
+		AddDeleteCmd(),
 	}
 
 	rootCmd.AddCommand(cmds...)
