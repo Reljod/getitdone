@@ -14,5 +14,5 @@ func ListCmds() {
 		return
 	}
 
-	fmt.Printf("\n[ getitdone ls ] Commands list:\n\n%v", cmds)
+	fmt.Printf("\n[ getitdone ls ] Commands list:\n\n%v\n", cmds)
 }

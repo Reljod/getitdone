@@ -22,7 +22,11 @@ func init() {
 	}
 
 	rootCmd.AddCommand(cmds...)
-	rootCmd.AddCommand(*initial.CompileCommandsFromConfig()...)
+	cmdsFromConfig := initial.CompileCommandsFromConfig()
+	if cmdsFromConfig != nil {
+		rootCmd.AddCommand(*cmdsFromConfig...)
+	}
+
 }
 
 func Execute() {
