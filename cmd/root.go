@@ -14,8 +14,14 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(saveCmd)
-	rootCmd.AddCommand(CreateSetupCmd())
+
+	cmds := []*cobra.Command{
+		saveCmd,
+		CreateSetupCmd(),
+		AddListCmd(),
+	}
+
+	rootCmd.AddCommand(cmds...)
 	rootCmd.AddCommand(*initial.CompileCommandsFromConfig()...)
 }
 
