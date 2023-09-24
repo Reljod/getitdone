@@ -37,6 +37,10 @@ func CompileCommandsFromConfig() *[]*cobra.Command {
 	var commands []*cobra.Command = make([]*cobra.Command, 0)
 	for _, c := range commandsRawList {
 		splitCmd := strings.Split(c, " => ")
+		if len(splitCmd) != 2 {
+			continue
+		}
+
 		name := splitCmd[0]
 		command := splitCmd[1]
 
