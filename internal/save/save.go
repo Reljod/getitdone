@@ -10,13 +10,15 @@ import (
 	"github.com/Reljod/getitdone/internal/config"
 )
 
-func Save(name string, command *string) error {
+type Save struct{}
+
+func (save Save) Save(name string, command *string) error {
 	cmd := *command
 
-	if *command == "" {
+	if cmd == "" {
 		fmt.Println("Getting last command")
 		var err error
-		cmd, err = getLastCommand()
+		cmd, err = save.getLastCommand()
 		if err != nil {
 			error := fmt.Errorf("cannot get last command - %v", err)
 			fmt.Printf("%v\n", error)
@@ -24,14 +26,14 @@ func Save(name string, command *string) error {
 		}
 	}
 
-	if err := saveCommand(name, cmd); err != nil {
+	if err := save.saveCommand(name, cmd); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func getLastCommand() (string, error) {
+func (save Save) getLastCommand() (string, error) {
 	c1 := exec.Command("bash", "-c", "cat $HOME/.zsh_history")
 	c2 := exec.Command("tail", "-2")
 	c3 := exec.Command("head", "-1")
@@ -69,7 +71,7 @@ func getLastCommand() (string, error) {
 	return res, nil
 }
 
-func saveCommand(name string, command string) error {
+func (save Save) saveCommand(name string, command string) error {
 	configPath := config.ConfigPath
 	f, err := os.OpenFile(configPath, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {

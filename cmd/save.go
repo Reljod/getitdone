@@ -7,9 +7,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type SaveCommand struct{}
+type SaveCommand struct {
+	save *save.Save
+}
 
-func (cmd SaveCommand) Create() *cobra.Command {
+func (saveCmd SaveCommand) Create() *cobra.Command {
 	return &cobra.Command{
 		Use:   "save",
 		Short: "Save a command",
@@ -18,7 +20,7 @@ func (cmd SaveCommand) Create() *cobra.Command {
 			name := args[0]
 			command := strings.Join(args[1:], " ")
 
-			save.Save(name, &command)
+			saveCmd.save.Save(name, &command)
 		},
 	}
 }
