@@ -7,14 +7,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var saveCmd = &cobra.Command{
-	Use:   "save",
-	Short: "Save a command",
-	Args:  cobra.MinimumNArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
-		name := args[0]
-		command := strings.Join(args[1:], " ")
+type SaveCommand struct{}
 
-		save.Save(name, &command)
-	},
+func (cmd SaveCommand) Create() *cobra.Command {
+	return &cobra.Command{
+		Use:   "save",
+		Short: "Save a command",
+		Args:  cobra.MinimumNArgs(1),
+		Run: func(cmd *cobra.Command, args []string) {
+			name := args[0]
+			command := strings.Join(args[1:], " ")
+
+			save.Save(name, &command)
+		},
+	}
 }

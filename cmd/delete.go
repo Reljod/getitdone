@@ -5,7 +5,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func AddDeleteCmd() *cobra.Command {
+type DeleteCommand struct{}
+
+func (cmd DeleteCommand) Create() *cobra.Command {
 	return &cobra.Command{
 		Use:   "delete",
 		Short: "Delete a command",

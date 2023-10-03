@@ -5,7 +5,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func AddListCmd() *cobra.Command {
+type ListCommand struct{}
+
+func (cmd ListCommand) Create() *cobra.Command {
 	return &cobra.Command{
 		Use:   "ls",
 		Short: "List all custom commands",
