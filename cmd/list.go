@@ -5,14 +5,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type ListCommand struct{}
+type ListCommand struct {
+	List *list.List
+}
 
-func (cmd ListCommand) Create() *cobra.Command {
+func (listCmd ListCommand) Create() *cobra.Command {
 	return &cobra.Command{
 		Use:   "ls",
 		Short: "List all custom commands",
 		Run: func(cmd *cobra.Command, args []string) {
-			list.ListCmds()
+			listCmd.List.ListCmds()
 		},
 	}
 }

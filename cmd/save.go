@@ -8,7 +8,7 @@ import (
 )
 
 type SaveCommand struct {
-	save *save.Save
+	Save *save.Save
 }
 
 func (saveCmd SaveCommand) Create() *cobra.Command {
@@ -20,7 +20,7 @@ func (saveCmd SaveCommand) Create() *cobra.Command {
 			name := args[0]
 			command := strings.Join(args[1:], " ")
 
-			saveCmd.save.Save(name, &command)
+			saveCmd.Save.Save(name, &command)
 		},
 	}
 }

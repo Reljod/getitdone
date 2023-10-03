@@ -7,8 +7,12 @@ import (
 	"github.com/Reljod/getitdone/internal/read"
 )
 
-func ListCmds() {
-	cmds, err := read.ReadConfig()
+type List struct {
+	Read *read.Read
+}
+
+func (list List) ListCmds() {
+	cmds, err := list.Read.ReadConfig()
 	if err != nil {
 		log.Fatal(err)
 		return

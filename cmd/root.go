@@ -5,6 +5,10 @@ import (
 	"os"
 
 	"github.com/Reljod/getitdone/cmd/initial"
+	"github.com/Reljod/getitdone/internal/delete"
+	"github.com/Reljod/getitdone/internal/list"
+	"github.com/Reljod/getitdone/internal/read"
+	"github.com/Reljod/getitdone/internal/save"
 	"github.com/spf13/cobra"
 )
 
@@ -14,24 +18,20 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	deleteCmd := DeleteCommand{}.Create()
-	listCmd := ListCommand{}.Create()
-	saveCmd := SaveCommand{}.Create()
-	setupCmd := SetupCommand{}.Create()
 
-	cmds := []*cobra.Command{
-		saveCmd,
-		setupCmd,
-		listCmd,
-		deleteCmd,
-	}
+	rd := read.Read{}
+	del := delete.Delete{Read: &rd}
+	ls := list.List{Read: &rd}
+	sv := save.Save{}
 
-	rootCmd.AddCommand(cmds...)
+	rootCmd.AddCommand(DeleteCommand{Delete: &del}.Create())
+	rootCmd.AddCommand(ListCommand{List: &ls}.Create())
+	rootCmd.AddCommand(SaveCommand{Save: &sv}.Create())
+	rootCmd.AddCommand(SetupCommand{}.Create())
 	cmdsFromConfig := initial.CompileCommandsFromConfig()
 	if cmdsFromConfig != nil {
 		rootCmd.AddCommand(*cmdsFromConfig...)
 	}
-
 }
 
 func Execute() {

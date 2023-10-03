@@ -5,16 +5,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type DeleteCommand struct{}
+type DeleteCommand struct {
+	Delete *delete.Delete
+}
 
-func (cmd DeleteCommand) Create() *cobra.Command {
+func (deleteCmd DeleteCommand) Create() *cobra.Command {
 	return &cobra.Command{
 		Use:   "delete",
 		Short: "Delete a command",
 		Args:  cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			name := args[0]
-			delete.DeleteCmd(name)
+			deleteCmd.Delete.DeleteCmd(name)
 		},
 	}
 }

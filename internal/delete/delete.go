@@ -9,8 +9,12 @@ import (
 	"github.com/Reljod/getitdone/internal/read"
 )
 
-func DeleteCmd(cmdName string) {
-	cmdsRaw, err := read.ReadConfig()
+type Delete struct {
+	Read *read.Read
+}
+
+func (delete Delete) DeleteCmd(cmdName string) {
+	cmdsRaw, err := delete.Read.ReadConfig()
 	if err != nil {
 		log.Fatalln(err)
 		return

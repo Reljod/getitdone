@@ -10,7 +10,9 @@ import (
 	"github.com/Reljod/getitdone/internal/config"
 )
 
-func ReadConfig() (string, error) {
+type Read struct{}
+
+func (read Read) ReadConfig() (string, error) {
 	configPath := config.ConfigPath
 
 	f, err := os.Open(configPath)
@@ -34,8 +36,8 @@ func ReadConfig() (string, error) {
 	return string(out), nil
 }
 
-func ReadCommands() ([]internal.Command, error) {
-	cmdsRaw, err := ReadConfig()
+func (read Read) ReadCommands() ([]internal.Command, error) {
+	cmdsRaw, err := read.ReadConfig()
 	if err != nil {
 		log.Fatal(err)
 		return []internal.Command{}, err
